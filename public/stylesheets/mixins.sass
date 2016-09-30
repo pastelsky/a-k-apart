@@ -1,0 +1,14 @@
+@mixin bg-repeat-x($src)
+  background: url(#{$src}) 0 100% repeat-x
+  background-size: contain
+
+@mixin abs-left-bottom($x, $y)
+  position: absolute
+  left: $x
+  bottom: $y
+
+
+@mixin abs-right-bottom($x, $y)
+  position: absolute
+  right: $x
+  bottom: $y

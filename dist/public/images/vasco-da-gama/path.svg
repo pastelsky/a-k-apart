@@ -1,0 +1,11 @@
+<svg class="path nav-start" xmlns="http://www.w3.org/2000/svg" width="1300" height="550" viewBox="0 0 1300 550">
+  <title>
+    Vasco-da-gama's journey
+  </title>
+  <path fill="none"
+        stroke="#3EB7A6"
+        stroke-width="4px"
+        stroke-linecap="round" stroke-dasharray="4,8" stroke-linejoin="round"
+        d="M576 198s-7 34-53.2 66.3C504 326 537 417 537 417s7 34 133 28c0 0 27.67 11.7 46 0s18-24 29-30 10-35 10-35 9-11-4-36c0 0 4.27-1.37 5.32-4 1.05-2.63-1.32-6-1.32-6l118-47s-10-5-3-14"/>
+  <circle id="mover" r="8" x="8" y="8" fill="black" />
+</svg>

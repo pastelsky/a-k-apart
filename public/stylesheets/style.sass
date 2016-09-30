@@ -1,0 +1,85 @@
+@import animations
+@import base
+@import mixins
+@import normalize
+@import typography
+
+$wave-height: 12vh
+$wave-offset-x: -4vw
+$wave-1-bottom-offset: -1vh
+$wave-2-bottom-offset: $wave-height / 2.5
+$wave-3-bottom-offset: $wave-height / 1.2
+
+$ship-bottom-offset: $wave-3-bottom-offset - $wave-1-bottom-offset
+$ship-height: 58vh
+
+$map-right-offset: 3vw
+$map-bottom-offset: $wave-3-bottom-offset + 10vh
+$map-height: 45vh
+$map-w-h-ratio: 2.5802
+
+.map
+  @include abs-right-bottom($map-right-offset, $map-bottom-offset)
+  width: auto
+  height: $map-height
+  pointer-events: none
+  transition: all 0.2s
+
+.path
+  @include abs-right-bottom($map-right-offset, $map-bottom-offset)
+  height: $map-height
+  width: auto
+  pointer-events: none
+
+.ship
+  width: auto
+  height: $ship-height
+  @include abs-left-bottom(0, $ship-bottom-offset)
+  transform-origin: 50% 0%
+  animation: move-in-ship 2s, wave-ship 2.5s 2s alternate infinite
+  pointer-events: none
+
+  &.dock
+    transform: translateX(-100%)
+    animation: none
+
+
+.wave-1, .wave-2, .wave-3
+  width: 110vw
+  height: $wave-height
+  @include bg-repeat-x('../images/wave.svg')
+  @include abs-left-bottom($wave-offset-x, $wave-1-bottom-offset)
+  animation: wave-1 5s alternate infinite
+  pointer-events: none
+
+  &.speed
+    contain: strict
+    transform: translateZ(0)
+    animation: move-wave 10s linear infinite reverse
+
+
+.wave-2
+  @include abs-left-bottom($wave-offset-x, $wave-2-bottom-offset)
+  animation: wave-1 5s 0.3s alternate infinite
+  filter: hue-rotate(10deg) brightness(80%)
+
+.wave-3
+  @include abs-left-bottom($wave-offset-x, $wave-3-bottom-offset)
+  animation: wave-1 5s 0.6s alternate infinite
+  filter: hue-rotate(15deg) brightness(70%)
+
+.portrait
+  @include abs-left-bottom(-20vh, $wave-3-bottom-offset)
+  background-size: cover
+  height: 80vh
+  width: 70vh
+  background-position: 0 0
+  opacity: 0.4
+  pointer-events: none
+
+.flag
+  font-size: 5rem
+
+#mover
+  animation: pulse 0.6s alternate infinite
+

@@ -1,0 +1,38 @@
+{
+  "name": "Vasco da Gama",
+  "lifetime": "1460s – 24 December 1524",
+  "path": ""
+  "about": "Vasco da Gama, was a Portuguese explorer and the first European to reach India by sea. His initial voyage to India (1497–1499) was the first to link Europe and Asia by an ocean route. \nDa Gama's discovery of the sea route to India was significant and opened the way for an age of global imperialism and for the Portuguese to establish a long-lasting colonial empire in Asia. Traveling the ocean route allowed the Portuguese to avoid sailing across the highly disputed Mediterranean and traversing the dangerous Arabian Peninsula. The sum of the distances covered in the outward and return voyages made this expedition the longest ocean voyage ever made until then, far longer than a full voyage around the world by way of the Equator",
+  "timeline": [
+    {
+      "date": "8 July 1497",
+      "place": "Lisbon",
+      "caption": "The expedition set sail from Lisbon a fleet of four ships with a crew of 170 men. It followed the route pioneered by earlier explorers along the coast of Africa via Tenerife and the Cape Verde Islands."
+    },
+    {
+      "date": "4 November 1497",
+      "place": "African Coast",
+      "caption": "da Gama took a course south into the open ocean. This course proved successful and on 4 November 1497, the expedition made landfall on the African coast. For over three months the ships had sailed more than 10,000 kilometres (6,000 mi) of open ocean, by far the longest journey out of sight of land made by that time."
+    },
+    {
+      "date": "March 1498",
+      "place": "Mozambique",
+      "caption": "Vasco da Gama spent March 1498 in the vicinity of Mozambique Island — an Arab-controlled territory which was an integral part of the trade network in the Indian Ocean. Fearing the local population would be hostile to Christians, da Gama impersonated a Muslim and gained audience with the Sultan of Mozambique. With the paltry trade goods he had to offer, the explorer was unable to provide a suitable gift to the ruler. Soon the local populace became suspicious of da Gama and his men. Forced by a hostile crowd to flee Mozambique, da Gama departed the harbor, firing his cannons into the city in retaliation."
+    },
+    {
+      "date": "7th April 1498",
+      "place": "Mombasa",
+      "caption": "In the vicinity of modern Kenya, the expedition resorted to piracy, looting Arab merchant ships that were generally unarmed trading vessels without heavy cannons. The Portuguese became the first known Europeans to visit this port, but were met with hostility and soon departed."
+    },
+    {
+      "date": "14 April 1498",
+      "place": "Malindi",
+      "caption": "Vasco da Gama continued north, arriving on 14 April 1498 at the friendlier port of Malindi, whose leaders were having a conflict with those of Mombasa. There the expedition first noted evidence of Indian traders. Da Gama and his crew contracted the services of a pilot who used his knowledge of the monsoon winds to guide the expedition the rest of the way to Calicut, located on the southwest coast of India."
+    },
+    {
+      "date": "20 May 1498",
+      "place": "Calicut, India",
+      "caption": "The fleet arrives in Kappadu near Kozhikode (Calicut). The navigator was received with traditional hospitality, including a grand procession of at least 3,000 armed Nairs. However, the King of Calicut, Zamorin is failed to be impressed by the trivial gifts presented to him from Dom Manuel. While Zamorin's officials wondered at why there was no gold or silver, the Muslim merchants who considered da Gama their rival suggested that the latter was only an ordinary pirate and not a royal ambassador. The King insisted that da Gama pay customs duty—preferably in gold—like any other trader, which strained the relation between the two. Annoyed by this, da Gama carried a few Nairs and sixteen fishermen off with him by force."
+    }
+  ]
+}

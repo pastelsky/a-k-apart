@@ -1,0 +1,6 @@
+<svg class="path nav-start" xmlns="http://www.w3.org/2000/svg" width="1300" height="550" viewBox="0 0 1300 550"><title>Artboard 1</title>
+  <path id="cook-path" fill="none" stroke="#3EB7A6" stroke-width="4"
+        d="M126 456l-6-26 11-9 4-30 33-4s22.4 6.5 31 10c8.6 3.5 25 34.4 39 51s27 42 55 58 63 27 63 27 24.3-4 33-11-1-16.5 18-44 46-48 46-48l39-48s25.2-34 26-48c.8-14 56-187 56-187m3 2s-89 68.6-81 127c9.6 69 132 146 132 146l41 35 24-11s22.6 9 50 1c17-5 28-22.2 55-35 16.4-7.8 50-11.3 62-17 31.8-15 105-56 105-56s37.3 31.3 68 31c30.7-.3 38-16.8 66-12 28 4.8 59.4 57.4 61 68 1.6 10.6-18 21-18 21l47 18s33.6 6.7 35 13c1.4 6.3-22.8 17-29 13-6.2-4-21.8-12 9-26s62-22 76-25"
+        stroke-linecap="round" stroke-dasharray="3,13" stroke-linejoin="round"/>
+  <circle id="mover" r="8" x="8" y="8" fill="black" />
+</svg>
