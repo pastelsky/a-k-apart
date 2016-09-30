@@ -1,1 +1,395 @@
-!function(){"use strict";function a(a,b,c){const d=new XMLHttpRequest;return!!d&&(d.onreadystatechange=function(){4===d.readyState&&200===d.status&&b(c?d.responseText:JSON.parse(d.responseText))},d.open("GET",a),void d.send())}function b(a){return document.querySelector(a)}function c(a){return document.querySelectorAll(a)}function d(a,b){for(var d=c(a),e=0;e<d.length;e++)b(d[e])}function e(a,b,c,e){d(b,function(b){b.addEventListener(a,c,e)})}function f(a,b){d(a,function(a){a.style.display=b||"block"})}function g(a){d(a,function(a){a.style.display="none"})}function h(a,b){d(a,function(a){a.classList.add(b)})}function i(a,b){d(a,function(a){a.classList.remove(b)})}function j(){return"speechSynthesis"in window&&"SpeechSynthesisUtterance"in window}function l(a){a&&this.updatePath(a),this.timer=null}function m(a){a?(f(".nav"),g(".intro"),g(".nav-start"),h(".ship","dock"),h(".story","dock")):(g(".nav"),f(".intro"),f(".nav-start"),i(".ship","dock"),i(".story","dock"),g(".map"),g(".path"))}function n(c,d){var x,y,z,A,B,C,k=b(".story h1"),o=b(".storyboard"),p=b(".control-right"),q=b(".control-left"),r=b(".date"),v=(b(".ship"),b(".map"),b(".controls"),b(".btn-start")),w=b(".portrait"),D=20,E=this;this.currentIndex=d||-1;var F=c.timeline;0===this.currentIndex&&(q.disabled=!0),n.setNavigationView=m,n.setNavigationStartView=function(a){var b=function(a){37===a.keyCode?E.prev():39===a.keyCode&&E.next()};a?(f(".nav-start"),g(".heading"),g(".nav-intro"),f(".map"),f(".path"),f(".journey"),i(".story","dock"),h(".wave","speed"),i(".ship","dock"),E.next(),q.disabled=!0,e("click",".control-left",function(){E.prev()}),e("click",".control-right",function(){E.next()}),document.addEventListener("keydown",b)):(g(".nav-start"),g(".map"),g(".journey"),f(".nav-intro"),f(".heading"),h(".ship","dock"),h(".story","dock"),i(".wave","speed"),E.prev(),document.removeEventListener("keydown",b))},this.init=function(){k.innerText=c.name,r.innerText=c.lifetime,o.innerText=c.about,v.style.display="block",w.style.backgroundImage='url("'+c.portrait+'")',a(c.path,function(a){document.body.insertAdjacentHTML("beforeend",a),n.setNavigationView(!0)},!0),e("click",".btn-start",this.start)},this.start=function(){x=b(".path path"),y=b(".path circle"),C=x.getBoundingClientRect(),A=C.left,B=new l(x.getAttribute("d")),z=0,B.start(D,E.updatePointer,!1,z,null),n.setNavigationStartView(!0)},this.updatePointer=function(a,b,d){console.log(d),h(".wave","speed"),Math.round(d)===c.stops[E.currentIndex]&&(B.stop(),i(".wave","speed"),z=Math.round(d));var e="translate("+a.x+"px,"+a.y+"px) rotate("+b+"deg)";y.style.transform=y.style.webkitTransform=e},this.next=function(){if(!(this.currentIndex>F.length-2)){this.currentIndex===F.length-2?p.disabled=!0:(p.disabled=!1,q.disabled=!1);var a=F[++this.currentIndex].caption,b=F[this.currentIndex].date;o.innerText=a,r.innerText=b,0!==this.currentIndex&&(console.log("stopping journey and starting at",this.currentIndex,c.stops[this.currentIndex]),B.stop(),B.start(D,E.updatePointer,!1,c.stops[this.currentIndex-1],null)),j()}},this.prev=function(){if(!(this.currentIndex<1)){1===this.currentIndex?q.disabled=!0:(q.disabled=!1,p.disabled=!1);var a=F[--this.currentIndex].caption,b=F[this.currentIndex].date;o.innerText=a,r.innerText=b,B.start(D,E.updatePointer,!0,c.stops[this.currentIndex+1],null),j()}}}function p(){function a(a){for(var b=0;b<o.length;b++)if(o[b].path===a)return o[b];return null}this.init=function(){var b=window.location.pathname,c=a(b),d=this;c&&c.onEnter(),e("click","[data-html5]",function(a){const b=a.target.closest("[data-html5]").getAttribute("href");d.push(b),a.preventDefault()}),window.onpopstate=function(){var b=window.location.pathname,c=a(b);c&&c.onEnter()}},this.push=function(b){var c=a(b);history.pushState(null,null,b),c.onEnter()}}var k=speechSynthesis.getVoices();console.log(k),l.prototype={start:function(a,b,c,d,e,f){if(this.stop(),this.percent=d||0,0==a)return!1;var g=this,h=new Date;!function i(){var k,j=[],l=new Date,m=(l-h)/1e3,n=m/a,o=100*n;return"function"==typeof f&&(o=100*f(n)),c?o=d-o:o+=d,g.running=!0,o>100||o<0?(g.stop(),e.call(g.context)):(g.percent=o,j[0]=g.pointAt(o-1),j[1]=g.pointAt(o+1),k=180*Math.atan2(j[1].y-j[0].y,j[1].x-j[0].x)/Math.PI,g.timer=requestAnimationFrame(i),void b.call(g.context,g.pointAt(o),k,g.percent))}()},stop:function(){cancelAnimationFrame(this.timer),this.timer=null,this.running=!1},pointAt:function(a){return this.path.getPointAtLength(this.len*a/100)},updatePath:function(a){this.path=document.createElementNS("http://www.w3.org/2000/svg","path"),this.path.setAttribute("d",a),this.len=this.path.getTotalLength()}};var o=[{path:"/",onEnter:function(){m(!1)}},{path:"/vasco-da-gama",onEnter:function(){a("/public/data/vasco-da-gama.json",function(a){var b=new n(a);b.init()})}}],q=new p;q.init()}();
+(function () {
+'use strict';
+
+function get(url, cb, isRaw) {
+  const httpRequest = new XMLHttpRequest();
+  if (!httpRequest) {
+    return false;
+  }
+  httpRequest.onreadystatechange = function () {
+    if (httpRequest.readyState === 4 && httpRequest.status === 200) {
+      cb(isRaw ? httpRequest.responseText : JSON.parse(httpRequest.responseText))
+    }
+  };
+  httpRequest.open('GET', url);
+  httpRequest.send();
+}
+
+function qs(selector) {
+  return document.querySelector(selector)
+}
+
+function qsAll(selector) {
+  return document.querySelectorAll(selector)
+}
+
+function forEachElement(selector, callback) {
+  var elements = qsAll(selector);
+  for (var i = 0; i < elements.length; i++) {
+    callback(elements[i]);
+  }
+}
+
+function on(event, selector, callback, options) {
+  forEachElement(selector, function (element) {
+    element.addEventListener(event, callback, options)
+  });
+}
+
+
+function show(selector, displayType) {
+  forEachElement(selector, function (element) {
+    element.style.display = displayType || 'block'
+  });
+}
+
+function hide(selector) {
+  forEachElement(selector, function (element) {
+    element.style.display = 'none'
+  });
+}
+
+function addClass(selector, classToAdd) {
+  forEachElement(selector, function (element) {
+    element.classList.add(classToAdd);
+  });
+}
+
+
+function removeClass(selector, classToRemove) {
+  forEachElement(selector, function (element) {
+    element.classList.remove(classToRemove);
+  });
+}
+
+function supportsSpeech() {
+  return 'speechSynthesis' in window && 'SpeechSynthesisUtterance' in window;
+}
+
+var voices = speechSynthesis.getVoices();
+console.log(voices);
+
+/*-----------------------------
+ Path Animator v1.1.0
+ (c) 2013 Yair Even Or <http://dropthebit.com>
+
+ MIT-style license.
+ ------------------------------*/
+function PathAnimator(path) {
+  if (path) this.updatePath(path);
+  this.timer = null;
+}
+
+PathAnimator.prototype = {
+  start: function (duration, step, reverse, startPercent, callback, easing) {
+    this.stop();
+    this.percent = startPercent || 0;
+
+    if (duration == 0) return false;
+
+    var that = this,
+      startTime = new Date(),
+      delay = 1000 / 60;
+
+    (function calc() {
+      var p = [], angle,
+        now = new Date(),
+        elapsed = (now - startTime) / 1000,
+        t = (elapsed / duration),
+        percent = t * 100;
+
+      // easing functions: https://gist.github.com/gre/1650294
+      if (typeof easing == 'function')
+        percent = easing(t) * 100;
+
+      if (reverse)
+        percent = startPercent - percent;
+      else
+        percent += startPercent;
+
+      that.running = true;
+
+      // On animation end (from '0%' to '100%' or '100%' to '0%')
+      if (percent > 100 || percent < 0) {
+        that.stop();
+        return callback.call(that.context);
+      }
+
+      that.percent = percent;	// save the current completed percentage value
+
+      //  angle calculations
+      p[0] = that.pointAt(percent - 1);
+      p[1] = that.pointAt(percent + 1);
+      angle = Math.atan2(p[1].y - p[0].y, p[1].x - p[0].x) * 180 / Math.PI;
+
+      // advance to the next point on the path
+      that.timer = requestAnimationFrame(calc);
+      // do one step ("frame")
+      step.call(that.context, that.pointAt(percent), angle, that.percent);
+    })();
+  },
+
+  stop: function () {
+    cancelAnimationFrame(this.timer);
+    this.timer = null;
+    this.running = false;
+  },
+
+  pointAt: function (percent) {
+    return this.path.getPointAtLength(this.len * percent / 100);
+  },
+
+  updatePath: function (path) {
+    this.path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    this.path.setAttribute('d', path);
+    this.len = this.path.getTotalLength();
+  }
+};
+
+function setNavigationView(shouldStart) {
+  if (shouldStart) {
+    show('.nav');
+    hide('.intro');
+    hide('.nav-start');
+    addClass('.ship', 'dock');
+    addClass('.story', 'dock');
+  } else {
+    hide('.nav');
+    show('.intro');
+    show('.nav-start');
+    removeClass('.ship', 'dock');
+    removeClass('.story', 'dock');
+    hide('.map');
+    hide('.path');
+  }
+}
+
+function StoryBoard(data, startingIndex) {
+  var heading = qs('.story h1');
+  var storyboard = qs('.storyboard');
+  var controlNext = qs('.control-right');
+  var controlPrev = qs('.control-left');
+  var dateElement = qs('.date');
+  var ship = qs('.ship');
+  var map = qs('.map');
+  var controls = qs('.controls')
+  var startButton = qs('.btn-start');
+  var portrait = qs('.portrait');
+  var journeyPath, pointer, journeyProgress, pointerXOffset, journeyAnimator, pathBCR;
+  var journeyTime = 20;
+  var self = this;
+
+  this.currentIndex = startingIndex || -1;
+  var timeline = data.timeline;
+
+  if (this.currentIndex === 0) {
+    controlPrev.disabled = true;
+  }
+
+  StoryBoard.setNavigationView = setNavigationView;
+
+  StoryBoard.setNavigationStartView = function (shouldStart) {
+    var listenForKeypress = function (e) {
+      if (e.keyCode === 37)
+        self.prev();
+      else if (e.keyCode === 39)
+        self.next();
+    };
+    if (shouldStart) {
+      show('.nav-start');
+      hide('.heading');
+      hide('.nav-intro');
+      show('.map');
+      show('.path');
+      show('.journey');
+      removeClass('.story', 'dock');
+      addClass('.wave', 'speed');
+      removeClass('.ship', 'dock');
+      self.next();
+      controlPrev.disabled = true;
+
+      on('click', '.control-left', function () {
+        self.prev()
+      });
+
+      on('click', '.control-right', function () {
+        self.next()
+      });
+
+      document.addEventListener('keydown', listenForKeypress);
+
+    } else {
+      hide('.nav-start');
+      hide('.map');
+      hide('.journey');
+      show('.nav-intro');
+      show('.heading');
+      addClass('.ship', 'dock');
+      addClass('.story', 'dock');
+      removeClass('.wave', 'speed');
+
+      self.prev();
+
+      document.removeEventListener('keydown', listenForKeypress);
+    }
+  };
+
+
+  this.init = function () {
+    heading.innerText = data.name;
+    dateElement.innerText = data.lifetime;
+    storyboard.innerText = data.about;
+    qs('.map').src = "/public/images/world.svg";
+
+    startButton.style.display = 'block';
+    portrait.style.backgroundImage = 'url("' + data.portrait + '")';
+
+    get(data.path, function (result) {
+      document.body.insertAdjacentHTML('beforeend', result);
+      StoryBoard.setNavigationView(true);
+    }, true);
+
+    on('click', '.btn-start', this.start)
+  };
+
+  this.start = function () {
+    journeyPath = qs('.path path');
+    pointer = qs('.path circle');
+    pathBCR = journeyPath.getBoundingClientRect();
+    pointerXOffset = pathBCR.left;
+
+    journeyAnimator = new PathAnimator(journeyPath.getAttribute('d'));
+    journeyProgress = 0;
+    journeyAnimator.start(journeyTime, self.updatePointer, false, journeyProgress, null);
+    StoryBoard.setNavigationStartView(true);
+  };
+
+  this.updatePointer = function (point, angle, percent) {
+    console.log(percent);
+    addClass('.wave', 'speed')
+    if (Math.round(percent) === data.stops[self.currentIndex]) {
+      journeyAnimator.stop();
+      removeClass('.wave', 'speed')
+      journeyProgress = Math.round(percent);
+    }
+    var transform = 'translate(' + point.x + 'px,' + point.y + 'px) rotate(' + angle + 'deg)';
+    pointer.style.transform = pointer.style.webkitTransform = transform;
+  };
+
+  this.next = function () {
+    if (this.currentIndex > timeline.length - 2)
+      return;
+
+    if (this.currentIndex === timeline.length - 2) {
+      controlNext.disabled = true;
+    } else {
+      controlNext.disabled = false;
+      controlPrev.disabled = false;
+    }
+
+    var caption = timeline[++this.currentIndex].caption;
+    var date = timeline[this.currentIndex].date;
+    storyboard.innerText = caption;
+    dateElement.innerText = date;
+
+    if (this.currentIndex !== 0) {
+      console.log("stopping journey and starting at", this.currentIndex, data.stops[this.currentIndex]);
+      journeyAnimator.stop();
+      journeyAnimator.start(journeyTime, self.updatePointer, false, data.stops[this.currentIndex - 1], null);
+    }
+
+
+    if (supportsSpeech()) {
+      // speak(caption)
+    }
+  };
+
+  this.prev = function () {
+    if (this.currentIndex < 1)
+      return;
+
+    if (this.currentIndex === 1) {
+      controlPrev.disabled = true;
+    } else {
+      controlPrev.disabled = false;
+      controlNext.disabled = false;
+    }
+
+    var caption = timeline[--this.currentIndex].caption;
+    var date = timeline[this.currentIndex].date;
+    storyboard.innerText = caption;
+    dateElement.innerText = date;
+
+    journeyAnimator.start(journeyTime, self.updatePointer, true, data.stops[this.currentIndex + 1], null);
+
+
+    if (supportsSpeech()) {
+      // speak(caption)
+    }
+  }
+}
+
+var routes = [{
+  path: '/',
+  onEnter: function () {
+    setNavigationView(false);
+  }
+},
+  {
+  path: '/vasco-da-gama',
+  onEnter: function () {
+    get('/public/data/vasco-da-gama.json', function (result) {
+      var storyBoard = new StoryBoard(result);
+      storyBoard.init();
+    })
+  },
+}];
+
+function Router() {
+
+  function getMatchingPath(path) {
+
+    for (var i = 0; i < routes.length; i++) {
+      if (routes[i].path === path)
+        return routes[i];
+    }
+    return null;
+  }
+
+  this.init = function () {
+    var currentPath = window.location.pathname;
+    var currentRoute = getMatchingPath(currentPath);
+    var self = this;
+
+    if (currentRoute) {
+      currentRoute.onEnter();
+    }
+
+    on('click', '[data-html5]', function (e) {
+      const nextURL = e.target.closest('[data-html5]').getAttribute('href');
+      self.push(nextURL);
+      e.preventDefault();
+    });
+
+    window.onpopstate = function () {
+      var currentPath = window.location.pathname;
+      var currentRoute = getMatchingPath(currentPath);
+      if (currentRoute) {
+        currentRoute.onEnter();
+      }
+    }
+  };
+
+  this.push = function (path) {
+    var matchingRoute = getMatchingPath(path);
+    history.pushState(null, null, path);
+    matchingRoute.onEnter()
+  }
+}
+
+var router = new Router();
+router.init();
+
+}());
+
+//# sourceMappingURL=../maps/index.js.map

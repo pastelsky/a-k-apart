@@ -97,6 +97,7 @@ export default function StoryBoard(data, startingIndex) {
     heading.innerText = data.name;
     dateElement.innerText = data.lifetime;
     storyboard.innerText = data.about;
+    qs('.map').src = "/public/images/world.svg";
 
     startButton.style.display = 'block';
     portrait.style.backgroundImage = 'url("' + data.portrait + '")';
