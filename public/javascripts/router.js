@@ -54,10 +54,8 @@ export default function Router() {
   };
 
   this.push = function (path) {
-    debugger;
     var matchingRoute = getMatchingPath(path);
     history.pushState(null, null, path);
-    console.log("Matched", matchingRoute)
     matchingRoute.onEnter()
   }
 }
